@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://wbplun2hmq85"]
+
+[ext_resource type="FontFile" uid="uid://bw1njyvt7qtji" path="res://five-nights-at-freddys.ttf" id="1_w714q"]
+[ext_resource type="Texture2D" uid="uid://qom2ognmooy5" path="res://part_transparent.png" id="2_2s2cl"]
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+z_index = 1
+layout_mode = 0
+offset_top = 89.0
+offset_right = 1030.0
+offset_bottom = 429.0
+theme_override_fonts/font = ExtResource("1_w714q")
+theme_override_font_sizes/font_size = 200
+text = "Game Paused"
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1089.12, 652.375)
+scale = Vector2(2281.75, 1265.25)
+texture = ExtResource("2_2s2cl")

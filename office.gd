@@ -11,16 +11,23 @@ var power_usage = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$timers.connect("hour_changed", update_time)
-	$Camera3D/Label.text = "12 pm"
+	$Camera3D/CanvasLayer/RightCorner/Label.text = "12 pm"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	camera_control(delta)
-	door_control()
+	if Settings.playing:
+		camera_control(delta)
+		door_control()
+		usage_update()
 	
-	print(power_usage)
+	if Input.is_action_just_pressed("ui_cancel"):
+		if Settings.playing == true:
+			pause()
+		
+		elif Settings.playing == false:
+			un_pause()
 
 func camera_control(delta):
 	if Input.is_action_pressed("left_arrow_key"):
@@ -86,6 +93,54 @@ func door_control():
 
 func update_time():
 	if $timers.hours == 12:
-		$Camera3D/Label.text = str($timers.hours) + " pm"
+		$Camera3D/CanvasLayer/RightCorner/Label.text = str($timers.hours) + " pm"
 	else:
-		$Camera3D/Label.text = str($timers.hours) + " am"
+		$Camera3D/CanvasLayer/RightCorner/Label.text = str($timers.hours) + " am"
+
+func usage_update():
+	if power_usage == 1:
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage2.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/YellowUsage.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow2.hide()
+	
+	if power_usage == 2:
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage2.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/YellowUsage.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow2.hide()
+	
+	if power_usage == 3:
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage2.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/YellowUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow.hide()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow2.hide()
+	
+	if power_usage == 4:
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage2.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/YellowUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow2.hide()
+	
+	if power_usage == 5:
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/GreenUsage2.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/YellowUsage.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow.show()
+		$Camera3D/CanvasLayer/LeftCorner/UsageLabel/RedYellow2.show()
+
+func pause():
+	$Camera3D/pause.show()
+	$Camera3D/CanvasLayer.hide()
+	
+	Settings.playing = false
+
+func un_pause():
+	$Camera3D/pause.hide()
+	$Camera3D/CanvasLayer.show()
+	
+	Settings.playing = true
