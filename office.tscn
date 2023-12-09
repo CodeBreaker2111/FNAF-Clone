@@ -1,0 +1,114 @@
+[gd_scene load_steps=12 format=3 uid="uid://bcjhsyd3w2f4o"]
+
+[ext_resource type="Script" path="res://office.gd" id="1_yurdk"]
+[ext_resource type="ArrayMesh" uid="uid://50qsi6s7nfpd" path="res://office.obj" id="2_a8kt1"]
+[ext_resource type="PackedScene" uid="uid://h687b8vjrihw" path="res://horror_chair.glb" id="2_irerv"]
+[ext_resource type="Script" path="res://Camera3D.gd" id="3_c1ktn"]
+[ext_resource type="PackedScene" uid="uid://b3ttmtg43sm6w" path="res://door.glb" id="3_ofxl6"]
+[ext_resource type="Script" path="res://timers.gd" id="3_v25lu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1xnek"]
+size = Vector3(0.490707, 6.29883, 10.0686)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85580"]
+size = Vector3(0.502523, 6.42007, 10.0152)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4momp"]
+size = Vector3(1.30758, 0.399351, 5.56092)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a3054"]
+size = Vector3(9.24447, 4.96238, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_utns0"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_yurdk")
+
+[node name="Office" type="Node3D" parent="."]
+
+[node name="horror_chair" parent="Office" instance=ExtResource("2_irerv")]
+transform = Transform3D(0.42123, 0, -2.55552, 0, 2.59, 0, 2.55552, 0, 0.42123, 1.89961, 3.2806, -2.65786)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 0.337161, 0.941447, 0, -0.941447, 0.337161, 3.84045, 8.62256, 1.12005)
+light_energy = 0.125
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 9.881
+light_angular_distance = 90.0
+
+[node name="Area3D" type="Area3D" parent="Office"]
+
+[node name="Door1" parent="Office" instance=ExtResource("3_ofxl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.826, 3.164, 1.399)
+
+[node name="Door2" parent="Office" instance=ExtResource("3_ofxl6")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.829, 3.196, -7.928)
+
+[node name="Office2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.29965, 0, -3.2565)
+mesh = ExtResource("2_a8kt1")
+
+[node name="HitBoxes" type="Area3D" parent="Office2"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Office2/HitBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76674, 3.23611, 0)
+shape = SubResource("BoxShape3D_1xnek")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Office2/HitBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.77003, 3.17035, 0)
+shape = SubResource("BoxShape3D_85580")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Office2/HitBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.52959, 2.74794, 0)
+shape = SubResource("BoxShape3D_4momp")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Office2/HitBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0167007, 3.93325, -4.78526)
+shape = SubResource("BoxShape3D_a3054")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Office2/HitBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0167007, 3.93325, 4.76285)
+shape = SubResource("BoxShape3D_a3054")
+
+[node name="timers" type="Node" parent="."]
+script = ExtResource("3_v25lu")
+
+[node name="Night_timer" type="Timer" parent="timers"]
+wait_time = 90.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.0320561, -0.400079, 0.91592, -6.93294e-10, 0.916391, 0.400285, -0.999486, 0.0128316, -0.0293759, 2.078, 3.895, -2.655)
+script = ExtResource("3_c1ktn")
+
+[node name="Label" type="Label" parent="Camera3D"]
+offset_right = 782.0
+offset_bottom = 402.0
+theme_override_font_sizes/font_size = 32
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+
+[node name="LeftCorner" type="HBoxContainer" parent="Camera3D/CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -117.0
+offset_right = 130.0
+offset_bottom = -64.0
+grow_vertical = 0
+
+[node name="UsageLabel" type="Label" parent="Camera3D/CanvasLayer/LeftCorner"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Usage"
+
+[node name="Area3D" type="Area3D" parent="Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/Area3D"]
+transform = Transform3D(-0.0320561, 2.45023e-11, -0.999486, -0.400079, 0.916391, 0.0128316, 0.91592, 0.400285, -0.0293759, 0, -0.857293, -0.37447)
+shape = SubResource("CapsuleShape3D_utns0")
+
+[node name="HitBoxes" type="Node" parent="."]
+
+[connection signal="timeout" from="timers/Night_timer" to="timers" method="_on_night_timer_timeout"]
+[connection signal="area_entered" from="Camera3D/Area3D" to="Camera3D" method="_hit_area3d"]
+[connection signal="area_exited" from="Camera3D/Area3D" to="Camera3D" method="_exited_area3d"]
